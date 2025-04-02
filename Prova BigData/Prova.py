@@ -4,7 +4,7 @@ import pymongo
 import urllib.parse
 
 # Definir o caminho do arquivo CSV
-csv_path = r"E:\Users\admin\Downloads\archive\steam.csv."
+csv_path = r"C:\Users\aluno\Documents\GitHub\BigData\Prova BigData\archive\steam.csv."
 
 # Ler o CSV usando Pandas
 df = pd.read_csv(csv_path)
@@ -18,13 +18,13 @@ import urllib.parse
 
 # Definir usuário e senha
 username = "pedrohjs11"
-password = "5CEcTlOwPZi8EUaB"
+password = "64IcxNL8vtuMhZ7v"
 
 # Codificar a senha (caso tenha caracteres especiais)
 password_encoded = urllib.parse.quote_plus(password)
 
 # Criar a URI corretamente formatada
-MONGO_URI = f"mongodb+srv://pedrohjs11:5CEcTlOwPZi8EUaB@clusterprova.adpardy.mongodb.net/?retryWrites=true&w=majority&appName=ClusterProva"
+MONGO_URI = f"mongodb+srv://pedrohjs11:64IcxNL8vtuMhZ7v@clusterprova.iptxmnu.mongodb.net/?retryWrites=true&w=majority&appName=ClusterProva"
 
 # Conectar ao MongoDB Atlas
 client = pymongo.MongoClient(MONGO_URI)
