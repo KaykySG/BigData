@@ -4,7 +4,7 @@ import urllib.parse
 def testar_conexao_mongodb(uri):
     """Tenta se conectar ao MongoDB Atlas e imprime o resultado."""
     try:
-        client = pymongo.MongoClient(uri, serverSelectionTimeoutMS=90000)  # Timeout de 5 segundos
+        client = pymongo.MongoClient(uri, serverSelectionTimeoutMS=10000)  # Timeout de 10 segundos
         client.server_info()  # Força a conexão e obtém informações do servidor
         print("Conexão com o MongoDB Atlas estabelecida com sucesso!")
         return True

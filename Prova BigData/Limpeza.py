@@ -24,13 +24,6 @@ def verificar_tratamentos(df):
         else:
             print(f"- Coluna '{coluna}' não está totalmente padronizada.")
 
-    # Verificar tipos de dados (exemplo)
-    # if pd.api.types.is_numeric_dtype(df['coluna_numerica']):
-    #     print("- Coluna 'coluna_numerica' é numérica.")
-    # else:
-    #     print("- Coluna 'coluna_numerica' não é numérica.")
-
-# Exemplo de uso
 caminho_arquivo = r"C:\Users\aluno\Documents\GitHub\BigData\Prova BigData\archive\steam.csv"
 try:
     df = pd.read_csv(caminho_arquivo)

@@ -3,6 +3,7 @@ import pandas as pd
 import pymongo
 import plotly.express as px
 import urllib.parse
+from bson.objectid import ObjectId # Importação correta
 
 # Configurações de conexão com o MongoDB
 username = "pedrohjs11"
@@ -20,24 +21,35 @@ def carregar_dados():
     collection = db[COLLECTION]
     dados = list(collection.find())
     client.close()
+    # Converter ObjectId para string
+    for documento in dados:
+        for chave, valor in documento.items():
+            if isinstance(valor, ObjectId): # Alterado para ObjectId
+                documento[chave] = str(valor)
     return pd.DataFrame(dados)
 
 df = carregar_dados()
 
-# Gráfico de barras interativo
-st.subheader("Gráfico de Barras")
-coluna_x = st.selectbox("Selecione a coluna para o eixo X:", df.columns)
-coluna_y = st.selectbox("Selecione a coluna para o eixo Y:", df.select_dtypes(include=['number']).columns)
-fig_barras = px.bar(df, x=coluna_x, y=coluna_y)
-st.plotly_chart(fig_barras)
+# Jogos mais bem avaliados
+st.subheader("Jogos mais bem avaliados")
+top_jogos_positivos = df.nlargest(10, 'positive_ratings') # Substitua 'positive_ratings' pela coluna correta
+fig_positivos = px.bar(top_jogos_positivos, x='name', y='positive_ratings', labels={'positive_ratings': 'Avaliações Positivas', 'name': 'Nome'})
+st.plotly_chart(fig_positivos)
 
-# Gráfico de dispersão interativo
-st.subheader("Gráfico de Dispersão")
-coluna_x_disp = st.selectbox("Selecione a coluna para o eixo X (dispersão):", df.columns)
-coluna_y_disp = st.selectbox("Selecione a coluna para o eixo Y (dispersão):", df.select_dtypes(include=['number']).columns, key="disp_y")
-fig_dispersao = px.scatter(df, x=coluna_x_disp, y=coluna_y_disp)
-st.plotly_chart(fig_dispersao)
+# Jogos com mais avaliações ruins
+st.subheader("Jogos com mais avaliações ruins")
+top_jogos_negativos = df.nlargest(10, 'negative_ratings') # Substitua 'negative_ratings' pela coluna correta
+fig_negativos = px.bar(top_jogos_negativos, x='name', y='negative_ratings', labels={'negative_ratings': 'Avaliações Negativas', 'name': 'Nome'})
+st.plotly_chart(fig_negativos)
 
-# Tabela interativa
-st.subheader("Tabela de Dados")
-st.dataframe(df)
+# Jogos com mais horas jogadas
+st.subheader("Jogos com mais horas jogadas")
+top_jogos_horas = df.nlargest(10, 'average_playtime') # Substitua 'average_playtime' pela coluna correta
+fig_horas = px.bar(top_jogos_horas, x='name', y='average_playtime', labels={'average_playtime': 'Tempo Médio de Jogo', 'name': 'Nome'}) 
+st.plotly_chart(fig_horas)
+
+# Gêneros mais recorrentes em jogos
+st.subheader("Gêneros mais recorrentes em jogos")
+generos = df['genres'].str.split(';', expand=True).stack().str.strip().value_counts().nlargest(10)
+fig_generos_pizza = px.pie(names=generos.index, values=generos.values)
+st.plotly_chart(fig_generos_pizza)
