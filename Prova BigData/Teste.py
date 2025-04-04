@@ -23,8 +23,9 @@ def testar_conexao_mongodb(uri):
 
 # Substitua pelas suas credenciais e URI
 username = "pedrohjs11"
-password = "64IcxNL8vtuMhZ7v"
+password = "RWsSQOfkMVp4MRbh"
 password_encoded = urllib.parse.quote_plus(password)
-uri = f"mongodb+srv://{username}:{password_encoded}@clusterprova.iptxmnu.mongodb.net/?retryWrites=true&w=majority&appName=ClusterProva"
+uri = f"mongodb+srv://{username}:{password_encoded}@clusterprovafinal.uzmotrb.mongodb.net/?retryWrites=true&w=majority&appName=ClusterProvaFinal"
+
 
 testar_conexao_mongodb(uri)
